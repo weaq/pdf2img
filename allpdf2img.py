@@ -12,13 +12,17 @@ import argparse
 # arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--in directory", required=True,
-	help="path of input file - pdf")
+    help="path of input file - pdf")
 ap.add_argument("-t", "--to extension", required=True,
-	help="output extension - png or jpg")
+    help="output extension - png or jpg")
+ap.add_argument("-d", "--dpi", nargs='?', type=int, default=1,
+    help="output extension - png or jpg")
+
 args = vars(ap.parse_args())
 
 pathInput = args["in directory"]
 pathOutput = args["to extension"]
+dpi = args["dpi"]
 
 from pdf2image import convert_from_path
 import os, glob
@@ -32,6 +36,11 @@ else:
 
 pathOutput = pathOutput + "/"
 
+# between 72 - 800 dpi
+if dpi < 72:
+    dpi = 72
+elif dpi > 800:
+    dpi = 800
 
 # input dir not exist
 if not os.path.isdir(pathInput):
@@ -53,7 +62,7 @@ for pathFile in glob.glob(paths):
 
     # convert
     print("convert: " + fileName)
-    pages = convert_from_path(pathFile, 270) # 350, 270
+    pages = convert_from_path(pathFile, dpi) # 350, 270
 
     i = 1
 
