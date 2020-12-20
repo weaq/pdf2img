@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # pip install pdf2image
 # sudo apt-get purge build
 # sudo apt-get update
@@ -16,13 +19,15 @@ ap.add_argument("-i", "--in directory", required=True,
 ap.add_argument("-t", "--to extension", required=True,
     help="output extension - png or jpg")
 ap.add_argument("-d", "--dpi", nargs='?', type=int, default=1,
-    help="output extension - png or jpg")
+    help="dpi between dpi between 72-800 dpi")
 
 args = vars(ap.parse_args())
 
 pathInput = args["in directory"]
 pathOutput = args["to extension"]
 dpi = args["dpi"]
+
+###########################
 
 from pdf2image import convert_from_path
 import os, glob
